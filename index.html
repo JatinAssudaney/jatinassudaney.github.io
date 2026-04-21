@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jatin Assudaney — Frontend Engineer</title>
 <meta name="description" content="Frontend Engineer specializing in image-heavy, media-rich web performance. Currently at Aftershoot.">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -99,14 +100,34 @@
   }
   .nav__mark {
     font-family: var(--f-display);
-    font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: 0.02em;
-    font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  }
-  .nav__mark em {
+    font-weight: 400;
+    font-size: 1.75rem;
+    line-height: 1;
     font-style: italic;
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+    color: var(--fg);
+    transition: color 300ms, transform 300ms;
+    display: inline-block;
+    padding: 0 0.15em;
+    position: relative;
+  }
+  .nav__mark:hover {
     color: var(--accent);
+    transform: rotate(-4deg);
+  }
+  .nav__mark::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.15em;
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    transform: translateX(-50%) scale(0);
+    transition: transform 300ms ease;
+  }
+  .nav__mark:hover::after {
+    transform: translateX(-50%) scale(1);
   }
   .nav__links {
     display: flex;
@@ -755,7 +776,7 @@
 
 <!-- ============ NAV ============ -->
 <nav class="nav">
-  <a href="#top" class="nav__mark">Jatin Assudaney <em>—</em> Folio</a>
+  <a href="#top" class="nav__mark" aria-label="Jatin Assudaney — home">J</a>
   <div class="nav__links">
     <a href="#about">About</a>
     <a href="#experience">Work</a>
