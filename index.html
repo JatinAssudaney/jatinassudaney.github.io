@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jatin Assudaney — Frontend Engineer</title>
+<meta name="description" content="Frontend Engineer specializing in image-heavy, media-rich web performance. Currently at Aftershoot.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===================== TOKENS ===================== */
+  :root {
+    --ink:         #1a1614;
+    --ink-soft:    #4a423d;
+    --ink-muted:   #8a807a;
+    --paper:       #f4efe6;
+    --paper-warm:  #ede5d6;
+    --paper-deep:  #e0d5bf;
+    --accent:      #a8341f;        /* editorial red */
+    --accent-soft: #d4a89c;
+    --rule:        #1a161422;
+    --rule-strong: #1a161466;
+
+    --bg:          var(--paper);
+    --bg-alt:      var(--paper-warm);
+    --bg-deep:     var(--paper-deep);
+    --fg:          var(--ink);
+    --fg-soft:     var(--ink-soft);
+    --fg-muted:    var(--ink-muted);
+    --line:        var(--rule);
+    --line-strong: var(--rule-strong);
+
+    --f-display: 'Fraunces', 'Times New Roman', serif;
+    --f-body:    'Source Serif 4', Georgia, serif;
+    --f-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    --pad-page: clamp(1.25rem, 4vw, 3.5rem);
+    --max:      1280px;
+  }
+
+  [data-theme="dark"] {
+    --bg:          #14110f;
+    --bg-alt:      #1c1815;
+    --bg-deep:     #221d19;
+    --fg:          #ede5d6;
+    --fg-soft:     #c9bfb0;
+    --fg-muted:    #8a807a;
+    --line:        #ede5d622;
+    --line-strong: #ede5d666;
+    --accent:      #e86a4f;
+    --accent-soft: #7a3024;
+  }
+
+  /* ===================== RESET ===================== */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--fg);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 400ms ease, color 400ms ease;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  /* Grain overlay — subtle paper texture */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.35'/></svg>");
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: multiply;
+  }
+  [data-theme="dark"] body::before { mix-blend-mode: overlay; opacity: 0.08; }
+
+  /* ===================== NAV ===================== */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 1.25rem var(--pad-page);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    transition: background-color 400ms ease, border-color 400ms ease;
+  }
+  .nav__mark {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  }
+  .nav__mark em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .nav__links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .nav__links a {
+    color: var(--fg-soft);
+    transition: color 200ms;
+    position: relative;
+  }
+  .nav__links a:hover { color: var(--accent); }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 300ms ease;
+  }
+  .nav__links a:hover::after { width: 100%; }
+  @media (max-width: 720px) {
+    .nav__links a:not(.theme-toggle) { display: none; }
+  }
+
+  .theme-toggle {
+    width: 34px; height: 34px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    background: transparent;
+    color: var(--fg);
+    transition: transform 300ms, border-color 300ms;
+  }
+  .theme-toggle:hover {
+    transform: rotate(15deg);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .theme-toggle svg { width: 14px; height: 14px; }
+  [data-theme="light"] .theme-toggle .moon { display: block; }
+  [data-theme="light"] .theme-toggle .sun { display: none; }
+  [data-theme="dark"] .theme-toggle .moon { display: none; }
+  [data-theme="dark"] .theme-toggle .sun { display: block; }
+
+  /* ===================== SHARED ===================== */
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad-page); }
+
+  .section {
+    padding: clamp(4rem, 10vw, 8rem) 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+
+  .section__label {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    align-items: baseline;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  .section__num {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 0.9;
+    color: var(--accent);
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+    letter-spacing: -0.02em;
+  }
+  .section__title {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  /* reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 900ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  .reveal--delay-1 { transition-delay: 80ms; }
+  .reveal--delay-2 { transition-delay: 160ms; }
+  .reveal--delay-3 { transition-delay: 240ms; }
+  .reveal--delay-4 { transition-delay: 320ms; }
+
+  /* ===================== HERO ===================== */
+  .hero {
+    min-height: 100vh;
+    padding: 9rem var(--pad-page) 4rem;
+    display: grid;
+    align-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__meta {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2.5rem;
+  }
+  .hero__meta .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); }
+    50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 0%, transparent); }
+  }
+
+  .hero__title {
+    font-family: var(--f-display);
+    font-weight: 300;
+    font-size: clamp(3rem, 11vw, 9.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    margin: 0;
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  }
+  .hero__title .italic {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  }
+  .hero__title .amp {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--fg-muted);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+    display: inline-block;
+    transform: translateY(0.08em);
+  }
+
+  .hero__deck {
+    max-width: 48rem;
+    margin-top: 2.5rem;
+    font-family: var(--f-body);
+    font-size: clamp(1.1rem, 1.4vw, 1.35rem);
+    line-height: 1.5;
+    color: var(--fg-soft);
+  }
+  .hero__deck em {
+    font-style: italic;
+    color: var(--fg);
+  }
+
+  .hero__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .hero__scroll {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero__scroll::before {
+    content: '';
+    width: 48px; height: 1px;
+    background: var(--fg-muted);
+    animation: slide 2.2s ease-in-out infinite;
+  }
+  @keyframes slide {
+    0%, 100% { transform: scaleX(0.3); transform-origin: left; opacity: 0.4; }
+    50%      { transform: scaleX(1);   transform-origin: left; opacity: 1; }
+  }
+  .hero__date {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  /* decorative issue marker */
+  .hero__issue {
+    position: absolute;
+    top: 8rem;
+    right: var(--pad-page);
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    text-align: right;
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+    line-height: 1.4;
+  }
+  .hero__issue strong {
+    display: block;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 3rem;
+    color: var(--fg);
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+    letter-spacing: -0.02em;
+  }
+  @media (max-width: 720px) {
+    .hero__issue { display: none; }
+  }
+
+  /* ===================== ABOUT ===================== */
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+  @media (min-width: 900px) {
+    .about__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .about__lede {
+    font-family: var(--f-display);
+    font-weight: 300;
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  }
+  .about__lede em {
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  }
+  .about__lede .drop {
+    float: left;
+    font-family: var(--f-display);
+    font-size: 4.5em;
+    line-height: 0.82;
+    font-weight: 300;
+    margin: 0.02em 0.1em 0 0;
+    color: var(--accent);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+    font-style: italic;
+  }
+  .about__body p {
+    margin: 0 0 1.1rem;
+    color: var(--fg-soft);
+  }
+  .about__body p:first-child { margin-top: 0; }
+  .about__body strong {
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  /* ===================== EXPERIENCE ===================== */
+  .exp {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--line-strong);
+  }
+  .exp__item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem 2rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: padding 400ms ease;
+  }
+  @media (min-width: 780px) {
+    .exp__item {
+      grid-template-columns: 180px 1fr auto;
+      align-items: baseline;
+    }
+  }
+  .exp__item:hover {
+    padding-left: 1rem;
+  }
+  .exp__item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 0; height: 100%;
+    background: var(--accent);
+    transition: width 400ms ease;
+  }
+  .exp__item:hover::before { width: 3px; }
+
+  .exp__dates {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-top: 0.4rem;
+  }
+  .exp__role {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 0 0 0.4rem;
+    font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  }
+  .exp__role em {
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  }
+  .exp__company {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-bottom: 1rem;
+  }
+  .exp__body {
+    color: var(--fg-soft);
+    margin: 0 0 0.8rem;
+    max-width: 52ch;
+  }
+  .exp__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+  .exp__tag {
+    font-family: var(--f-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
+  }
+  .exp__loc {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-top: 0.4rem;
+    white-space: nowrap;
+  }
+
+  /* ===================== PROJECTS ===================== */
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--line-strong);
+    border: 1px solid var(--line-strong);
+  }
+  @media (min-width: 900px) {
+    .projects { grid-template-columns: 1fr 1fr; }
+  }
+  .project {
+    background: var(--bg);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    gap: 1.25rem;
+    transition: background-color 400ms ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 320px;
+  }
+  .project::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 60% 50% at 100% 0%,
+        color-mix(in srgb, var(--accent) 8%, transparent),
+        transparent 60%
+      );
+    opacity: 0;
+    transition: opacity 500ms ease;
+    pointer-events: none;
+  }
+  .project:hover {
+    background: var(--bg-alt);
+  }
+  .project:hover::after { opacity: 1; }
+
+  .project__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .project__num {
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .project__title {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0;
+    font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  }
+  .project__title em {
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  }
+  .project__desc {
+    color: var(--fg-soft);
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+  .project__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .project__tag {
+    font-family: var(--f-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .project__tag::after {
+    content: '·';
+    margin-left: 0.35rem;
+    color: var(--line-strong);
+  }
+  .project__tag:last-child::after { display: none; }
+
+  .project__link {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fg);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    position: relative;
+    z-index: 1;
+  }
+  .project__link .arrow {
+    display: inline-block;
+    transition: transform 300ms ease;
+  }
+  .project__link:hover { color: var(--accent); }
+  .project__link:hover .arrow {
+    transform: translate(4px, -4px);
+  }
+  .project__link--muted {
+    color: var(--fg-muted);
+    pointer-events: none;
+  }
+
+  /* ===================== SKILLS ===================== */
+  .skills {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  @media (min-width: 780px) {
+    .skills {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .skill-group {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 780px) {
+    .skill-group:nth-child(odd)  { padding-right: 3rem; border-right: 1px solid var(--line); padding-left: 0; }
+    .skill-group:nth-child(even) { padding-left: 3rem; }
+  }
+  .skill-group__label {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+  .skill-group__label::before {
+    content: attr(data-num);
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--fg-muted);
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  }
+  .skill-group__items {
+    font-family: var(--f-display);
+    font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+    line-height: 1.45;
+    font-weight: 300;
+    color: var(--fg);
+    font-variation-settings: 'opsz' 60, 'SOFT' 30;
+  }
+  .skill-group__items span {
+    display: inline-block;
+    margin-right: 0.25em;
+    transition: color 200ms, transform 200ms;
+    cursor: default;
+  }
+  .skill-group__items span::after {
+    content: ',';
+    color: var(--fg-muted);
+  }
+  .skill-group__items span:last-child::after { content: '.'; }
+  .skill-group__items span:hover {
+    color: var(--accent);
+    font-style: italic;
+    font-variation-settings: 'opsz' 60, 'SOFT' 100, 'WONK' 1;
+  }
+
+  /* ===================== CONTACT ===================== */
+  .contact {
+    text-align: left;
+  }
+  .contact__lede {
+    font-family: var(--f-display);
+    font-weight: 300;
+    font-size: clamp(2.2rem, 6.5vw, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin: 0 0 3rem;
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  }
+  .contact__lede em {
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    border-top: 1px solid var(--line-strong);
+    padding-top: 2.5rem;
+  }
+  @media (min-width: 720px) {
+    .contact__grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .contact__item {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .contact__item-label {
+    font-family: var(--f-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .contact__item-value {
+    font-family: var(--f-display);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--fg);
+    transition: color 200ms;
+    font-variation-settings: 'opsz' 60, 'SOFT' 30;
+  }
+  a.contact__item-value:hover {
+    color: var(--accent);
+    font-style: italic;
+    font-variation-settings: 'opsz' 60, 'SOFT' 100, 'WONK' 1;
+  }
+
+  /* ===================== FOOTER ===================== */
+  .colophon {
+    padding: 3rem var(--pad-page);
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .colophon em {
+    font-family: var(--f-display);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+</style>
+</head>
+<body data-theme="light">
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <a href="#top" class="nav__mark">Jatin Assudaney <em>—</em> Folio</a>
+  <div class="nav__links">
+    <a href="#about">About</a>
+    <a href="#experience">Work</a>
+    <a href="#projects">Selected</a>
+    <a href="#contact">Contact</a>
+    <button class="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero__issue reveal">
+      Vol. 06 · Issue 01<br>
+      <strong>2026</strong>
+    </div>
+
+    <div class="hero__meta reveal">
+      <span class="dot"></span>
+      <span>Available — Senior Frontend Roles</span>
+      <span>· New Delhi, IN</span>
+    </div>
+
+    <h1 class="hero__title reveal reveal--delay-1">
+      Frontend <span class="italic">engineer</span><br>
+      for image-<span class="italic">heavy</span><br>
+      web <span class="amp">&amp;</span> <span class="italic">media-rich</span> apps.
+    </h1>
+
+    <p class="hero__deck reveal reveal--delay-2">
+      Six years of building production web applications — currently leading frontend
+      for <em>Aftershoot's client gallery product</em>, where photographers deliver
+      shoots of 2,000+ images to clients through the browser. Previously: design
+      systems, Shadow-DOM component platforms, and microfrontend architectures at
+      Zeta and Delhivery.
+    </p>
+
+    <div class="hero__footer reveal reveal--delay-3">
+      <div class="hero__scroll">Scroll</div>
+      <div class="hero__date" id="hero-date">—</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section__label">
+      <div class="section__num">01</div>
+      <div class="section__title">The Writer</div>
+    </div>
+
+    <div class="about__grid">
+      <div class="about__lede reveal">
+        <span class="drop">I</span>'ve spent the last six years learning that
+        <em>the browser is a stage for craft</em> — and that the most interesting
+        frontend problems rarely come from the framework layer. They come from the
+        pixels, the bytes, and the seconds the user has to wait.
+      </div>
+      <div class="about__body reveal reveal--delay-1">
+        <p>
+          Today I'm an <strong>SSE-1 at Aftershoot</strong>, leading frontend on a
+          gallery product where a single wedding photographer might upload 2,000
+          images and expect their client to browse them on a phone at the reception.
+          The constraints are delicious: upload pipelines, retry semantics,
+          virtualization, progressive decoding, pixel-perfect layouts that don't
+          shift.
+        </p>
+        <p>
+          Before that I spent three and a half years at <strong>Delhivery</strong>
+          building design systems (Orca-UI, @orca-ui/icons) and full products
+          (Routing, Workflow, Dispatch) used across last-mile logistics — then a
+          year at <strong>Zeta</strong> architecting a Shadow-DOM component
+          platform with runtime federation and SSR host hooks.
+        </p>
+        <p>
+          I'm happiest when I'm turning vague constraints into discoverable
+          systems — and when the thing I ship feels like it was <em>made</em>,
+          not assembled.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section class="section" id="experience">
+  <div class="wrap">
+    <div class="section__label">
+      <div class="section__num">02</div>
+      <div class="section__title">Curriculum / Work</div>
+    </div>
+
+    <div class="exp">
+      <article class="exp__item reveal">
+        <div class="exp__dates">Feb '26 — Now</div>
+        <div>
+          <h3 class="exp__role">SSE 1, Frontend <em>—</em> Aftershoot</h3>
+          <div class="exp__company">Gallery Team · Client Gallery Product</div>
+          <p class="exp__body">
+            Leading frontend for the client gallery product. Re-architected the
+            upload pipeline (+28% throughput), shipped a fault-tolerant retry
+            system for flaky venue wifi, built "Infinite Gallery" streaming 2,000+
+            images through virtualization and progressive loading.
+          </p>
+          <div class="exp__tags">
+            <span class="exp__tag">React</span>
+            <span class="exp__tag">Vite</span>
+            <span class="exp__tag">TypeScript</span>
+            <span class="exp__tag">React Query</span>
+            <span class="exp__tag">Tailwind</span>
+          </div>
+        </div>
+        <div class="exp__loc">New Delhi</div>
+      </article>
+
+      <article class="exp__item reveal">
+        <div class="exp__dates">Dec '24 — Feb '26</div>
+        <div>
+          <h3 class="exp__role">SDE 2 <em>—</em> Zeta</h3>
+          <div class="exp__company">Platform · Frontend Infrastructure</div>
+          <p class="exp__body">
+            Architected a Shadow-DOM business-component platform with runtime
+            federation and SSR host hooks — self-bundled, version-isolated
+            components that drop into any Vue 2 or Vue 3 host with zero CSS bleed.
+            Built Tenant Assets, Hercules Registry, and the delivery pipeline
+            scaffolding used by every team.
+          </p>
+          <div class="exp__tags">
+            <span class="exp__tag">React</span>
+            <span class="exp__tag">Vue</span>
+            <span class="exp__tag">NestJS</span>
+            <span class="exp__tag">Webpack</span>
+            <span class="exp__tag">Kubernetes</span>
+          </div>
+        </div>
+        <div class="exp__loc">Bangalore</div>
+      </article>
+
+      <article class="exp__item reveal">
+        <div class="exp__dates">Jun '21 — Dec '24</div>
+        <div>
+          <h3 class="exp__role">Software Developer <em>—</em> Delhivery</h3>
+          <div class="exp__company">Last-Mile · Design System &amp; Products</div>
+          <p class="exp__body">
+            Created Orca-UI (React component library aligned with the Aquarius
+            Design System) and @orca-ui/icons with an automated build pipeline.
+            Shipped "Routing" (logistics planning) and the "Workflow" product
+            + Dispatch mobile app — replacing ad-hoc scripts with a single
+            configurable workflow engine. Conducted 50+ technical interviews.
+          </p>
+          <div class="exp__tags">
+            <span class="exp__tag">React</span>
+            <span class="exp__tag">Next.js</span>
+            <span class="exp__tag">React Native</span>
+            <span class="exp__tag">GraphQL</span>
+            <span class="exp__tag">Node.js</span>
+          </div>
+        </div>
+        <div class="exp__loc">Gurgaon</div>
+      </article>
+
+      <article class="exp__item reveal">
+        <div class="exp__dates">Nov '20 — Jun '21</div>
+        <div>
+          <h3 class="exp__role">Systems Engineer Trainee <em>—</em> Infosys</h3>
+          <div class="exp__company">Enterprise · Space Management Platform</div>
+          <p class="exp__body">
+            Enhanced a space-management platform for a Fortune 500 client,
+            tuning Java + SQL queries and backend workflows. Partnered with
+            US-based engineering teams across time zones.
+          </p>
+          <div class="exp__tags">
+            <span class="exp__tag">Java</span>
+            <span class="exp__tag">SQL</span>
+          </div>
+        </div>
+        <div class="exp__loc">Remote</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="section" id="projects">
+  <div class="wrap">
+    <div class="section__label">
+      <div class="section__num">03</div>
+      <div class="section__title">Selected Work</div>
+    </div>
+
+    <div class="projects">
+      <article class="project reveal">
+        <div class="project__meta">
+          <span class="project__num">№ 01</span>
+          <span>2026 · Aftershoot</span>
+        </div>
+        <div>
+          <h3 class="project__title">Infinite <em>Gallery</em></h3>
+          <p class="project__desc">
+            A continuous scroll surface streaming thousands of images across
+            multiple folders into one view. Windowed virtualization + progressive
+            loading (LQIP placeholders, responsive srcset) keep DOM size bounded
+            and scroll responsive on galleries with 2,000+ images — regardless
+            of scroll depth.
+          </p>
+        </div>
+        <div class="project__tags">
+          <span class="project__tag">React</span>
+          <span class="project__tag">Virtualization</span>
+          <span class="project__tag">Perf</span>
+        </div>
+        <a href="https://jatina.gallery.aftershoot.com/dog-park" target="_blank" rel="noopener" class="project__link">
+          View Live Gallery <span class="arrow">↗</span>
+        </a>
+      </article>
+
+      <article class="project reveal reveal--delay-1">
+        <div class="project__meta">
+          <span class="project__num">№ 02</span>
+          <span>2026 · Aftershoot</span>
+        </div>
+        <div>
+          <h3 class="project__title">Upload <em>Pipeline</em></h3>
+          <p class="project__desc">
+            Re-architected the image upload system — parallel chunked uploads,
+            a tuned concurrency pool, and backpressure-aware queueing. Throughput
+            up 28%. Paired with a fault-tolerant retry layer (exponential backoff
+            + manual UI) for photographers uploading from flaky venue wifi.
+          </p>
+        </div>
+        <div class="project__tags">
+          <span class="project__tag">Upload</span>
+          <span class="project__tag">Concurrency</span>
+          <span class="project__tag">Resilience</span>
+        </div>
+        <a class="project__link project__link--muted">
+          Proprietary · Internals on request
+        </a>
+      </article>
+
+      <article class="project reveal reveal--delay-2">
+        <div class="project__meta">
+          <span class="project__num">№ 03</span>
+          <span>2024 · Zeta</span>
+        </div>
+        <div>
+          <h3 class="project__title">Shadow-DOM <em>Platform</em></h3>
+          <p class="project__desc">
+            A business-component platform with runtime federation and SSR host
+            hooks. Self-bundled, version-isolated components drop into any Vue 2
+            or Vue 3 host with zero CSS bleed, zero framework-version conflicts,
+            and no bundler changes on the host side.
+          </p>
+        </div>
+        <div class="project__tags">
+          <span class="project__tag">Shadow DOM</span>
+          <span class="project__tag">Module Federation</span>
+          <span class="project__tag">SSR</span>
+        </div>
+        <a class="project__link project__link--muted">
+          Proprietary · Architecture on request
+        </a>
+      </article>
+
+      <article class="project reveal reveal--delay-3">
+        <div class="project__meta">
+          <span class="project__num">№ 04</span>
+          <span>2023 · Delhivery</span>
+        </div>
+        <div>
+          <h3 class="project__title">Orca-UI <em>&amp;</em> Icons</h3>
+          <p class="project__desc">
+            The React component library and unified icon system powering
+            Delhivery's internal products in lockstep with the Aquarius Design
+            System. Automated validate → SVGO → SVGR → publish pipeline; per-icon
+            tree-shaking; killed duplication across teams.
+          </p>
+        </div>
+        <div class="project__tags">
+          <span class="project__tag">Design System</span>
+          <span class="project__tag">SVG Pipeline</span>
+          <span class="project__tag">npm</span>
+        </div>
+        <a class="project__link project__link--muted">
+          Proprietary · Case study on request
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="section__label">
+      <div class="section__num">04</div>
+      <div class="section__title">Toolkit</div>
+    </div>
+
+    <div class="skills">
+      <div class="skill-group reveal">
+        <div class="skill-group__label" data-num="i">Languages</div>
+        <div class="skill-group__items">
+          <span>TypeScript</span>
+          <span>JavaScript</span>
+          <span>HTML</span>
+          <span>CSS</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal reveal--delay-1">
+        <div class="skill-group__label" data-num="ii">Frontend</div>
+        <div class="skill-group__items">
+          <span>React</span>
+          <span>Next.js</span>
+          <span>Vue</span>
+          <span>Redux</span>
+          <span>React Query</span>
+          <span>TailwindCSS</span>
+          <span>Design Systems</span>
+          <span>Micro-Frontends</span>
+          <span>Shadow DOM</span>
+          <span>Web Workers</span>
+          <span>SSR</span>
+          <span>Web Performance</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal">
+        <div class="skill-group__label" data-num="iii">Backend</div>
+        <div class="skill-group__items">
+          <span>Node.js</span>
+          <span>Express</span>
+          <span>GraphQL</span>
+          <span>NestJS</span>
+          <span>PostgreSQL</span>
+          <span>MongoDB</span>
+          <span>DynamoDB</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal reveal--delay-1">
+        <div class="skill-group__label" data-num="iv">Build &amp; Craft</div>
+        <div class="skill-group__items">
+          <span>Webpack</span>
+          <span>Vite</span>
+          <span>Rollup</span>
+          <span>Jenkins</span>
+          <span>CI/CD</span>
+          <span>Chrome DevTools</span>
+          <span>Lighthouse</span>
+          <span>Sentry</span>
+          <span>Cursor</span>
+          <span>Claude Code</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="section__label">
+      <div class="section__num">05</div>
+      <div class="section__title">Correspondence</div>
+    </div>
+
+    <h2 class="contact__lede reveal">
+      Currently <em>open</em> to<br>
+      senior frontend roles.<br>
+      <em>Let's talk.</em>
+    </h2>
+
+    <div class="contact__grid reveal reveal--delay-1">
+      <div class="contact__item">
+        <div class="contact__item-label">Email</div>
+        <a class="contact__item-value" href="mailto:jatin.assudaney24@gmail.com">jatin.assudaney24@gmail.com</a>
+      </div>
+      <div class="contact__item">
+        <div class="contact__item-label">LinkedIn</div>
+        <a class="contact__item-value" href="https://www.linkedin.com/in/jatin-assudaney" target="_blank" rel="noopener">/jatin-assudaney ↗</a>
+      </div>
+      <div class="contact__item">
+        <div class="contact__item-label">GitHub</div>
+        <a class="contact__item-value" href="https://github.com/JatinAssudaney" target="_blank" rel="noopener">/JatinAssudaney ↗</a>
+      </div>
+      <div class="contact__item">
+        <div class="contact__item-label">LeetCode</div>
+        <a class="contact__item-value" href="https://leetcode.com/JatinAssudaney" target="_blank" rel="noopener">/JatinAssudaney ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLOPHON ============ -->
+<footer class="colophon">
+  <div>Set in <em>Fraunces</em> &amp; Source Serif · Hand-built in 2026</div>
+  <div>© Jatin Assudaney — MMXXVI</div>
+</footer>
+
+<script>
+  // --- theme ---
+  const root = document.body;
+  const stored = localStorage.getItem('jatin-theme');
+  if (stored) root.setAttribute('data-theme', stored);
+
+  function toggleTheme() {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('jatin-theme', next);
+  }
+
+  // --- scroll reveals ---
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  // --- current date in hero ---
+  const dateEl = document.getElementById('hero-date');
+  if (dateEl) {
+    const d = new Date();
+    const fmt = d.toLocaleDateString('en-US', {
+      weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
+    });
+    dateEl.textContent = fmt;
+  }
+</script>
+
+</body>
+</html>
