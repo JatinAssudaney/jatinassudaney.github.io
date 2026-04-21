@@ -621,6 +621,22 @@
     color: var(--fg-muted);
     pointer-events: none;
   }
+  .project__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+    align-items: baseline;
+    margin-top: 0.25rem;
+    position: relative;
+    z-index: 1;
+  }
+  .project__links .project__link { margin-top: 0; }
+  .project__link--small {
+    font-size: 0.65rem;
+    color: var(--fg-muted);
+    letter-spacing: 0.12em;
+  }
+  .project__link--small:hover { color: var(--accent); }
 
   /* ===================== SKILLS ===================== */
   .skills {
@@ -856,10 +872,12 @@
         </p>
         <p>
           Before that I spent three and a half years at <strong>Delhivery</strong>
-          building design systems (Orca-UI, @orca-ui/icons) and full products
-          (Routing, Workflow, Dispatch) used across last-mile logistics — then a
-          year at <strong>Zeta</strong> architecting a Shadow-DOM component
-          platform with runtime federation and SSR host hooks.
+          building <strong>DispatchOne</strong> — their productized
+          dispatch-management SaaS — including the <em>Orca-UI</em> design
+          system, the web dashboard's Routing and Workflow surfaces, and the
+          Driver mobile app. Then a year at <strong>Zeta</strong> architecting
+          a Shadow-DOM component platform with runtime federation and SSR host
+          hooks.
         </p>
         <p>
           I'm happiest when I'm turning vague constraints into discoverable
@@ -929,13 +947,16 @@
         <div class="exp__dates">Jun '21 — Dec '24</div>
         <div>
           <h3 class="exp__role">Software Developer <em>—</em> Delhivery</h3>
-          <div class="exp__company">Last-Mile · Design System &amp; Products</div>
+          <div class="exp__company">
+            <a href="https://getos1.com/dispatchone" target="_blank" rel="noopener" style="color:inherit; border-bottom: 1px solid currentColor; padding-bottom: 1px;">DispatchOne (getOS1)</a> · Dispatch-Management SaaS
+          </div>
           <p class="exp__body">
-            Created Orca-UI (React component library aligned with the Aquarius
-            Design System) and @orca-ui/icons with an automated build pipeline.
-            Shipped "Routing" (logistics planning) and the "Workflow" product
-            + Dispatch mobile app — replacing ad-hoc scripts with a single
-            configurable workflow engine. Conducted 50+ technical interviews.
+            Built the frontend for DispatchOne — Delhivery's dispatch-management SaaS.
+            Created <strong>Orca-UI</strong> (the React design system powering the
+            product) and <strong>@orca-ui/icons</strong>, shipped the web dashboard's
+            Routing (route optimizer) and Workflow (drag-and-drop process builder)
+            surfaces, and contributed to the Driver mobile app — the execution layer
+            in the hands of field drivers. 50+ technical interviews along the way.
           </p>
           <div class="exp__tags">
             <span class="exp__tag">React</span>
@@ -1054,25 +1075,34 @@
       <article class="project reveal reveal--delay-3">
         <div class="project__meta">
           <span class="project__num">№ 04</span>
-          <span>2023 · Delhivery</span>
+          <span>2021–2024 · Delhivery</span>
         </div>
         <div>
-          <h3 class="project__title">Orca-UI <em>&amp;</em> Icons</h3>
+          <h3 class="project__title">Dispatch<em>One</em></h3>
           <p class="project__desc">
-            The React component library and unified icon system powering
-            Delhivery's internal products in lockstep with the Aquarius Design
-            System. Automated validate → SVGO → SVGR → publish pipeline; per-icon
-            tree-shaking; killed duplication across teams.
+            Frontend for Delhivery's productized dispatch-management SaaS —
+            Orca-UI design system, web dashboard (Route Optimizer, drag-and-drop
+            Workflow builder, real-time tracking), and the Driver mobile app.
+            A live, public product with iOS and Android companions.
           </p>
         </div>
         <div class="project__tags">
+          <span class="project__tag">React</span>
+          <span class="project__tag">React Native</span>
           <span class="project__tag">Design System</span>
-          <span class="project__tag">SVG Pipeline</span>
-          <span class="project__tag">npm</span>
+          <span class="project__tag">SaaS</span>
         </div>
-        <a class="project__link project__link--muted">
-          Proprietary · Case study on request
-        </a>
+        <div class="project__links">
+          <a href="https://getos1.com/dispatchone" target="_blank" rel="noopener" class="project__link">
+            Product Page <span class="arrow">↗</span>
+          </a>
+          <a href="https://apps.apple.com/us/app/os1-driver-app/id6449781211" target="_blank" rel="noopener" class="project__link project__link--small">
+            iOS <span class="arrow">↗</span>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.getos1.driver" target="_blank" rel="noopener" class="project__link project__link--small">
+            Android <span class="arrow">↗</span>
+          </a>
+        </div>
       </article>
     </div>
   </div>
