@@ -657,6 +657,11 @@
     pointer-events: none;
   }
 
+  .features {
+    display: grid;
+    gap: clamp(4rem, 9vw, 7rem);
+  }
+
   .feature {
     display: grid;
     grid-template-columns: 1fr;
@@ -665,10 +670,45 @@
     position: relative;
     z-index: 1;
   }
+  /* divider between features (everything but the first) */
+  .feature + .feature::before {
+    content: '';
+    position: absolute;
+    top: calc(clamp(4rem, 9vw, 7rem) * -0.5);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 1px;
+    background: var(--line-strong);
+  }
+  .feature + .feature::after {
+    content: '§';
+    position: absolute;
+    top: calc(clamp(4rem, 9vw, 7rem) * -0.5);
+    left: 50%;
+    transform: translate(-50%, -55%);
+    background: var(--bg-alt);
+    padding: 0 0.6rem;
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--accent);
+    font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  }
+
   @media (min-width: 900px) {
-    .feature {
+    .feature--right {
       grid-template-columns: 1.05fr 1fr;
     }
+    .feature--left {
+      grid-template-columns: 1fr 1.05fr;
+    }
+    .feature--left .feature__copy { order: 2; }
+    .feature--left .feature__visual { order: 1; }
+    /* mirror the phone tilt when on the left */
+    .feature--left .phone--back  { transform: rotate(-6deg); right: auto; left: 0; }
+    .feature--left .phone--front { transform: rotate(4deg);  left: auto; right: 0; }
+    .feature--left .feature__visual:hover .phone--back  { transform: rotate(-8deg) translateY(-6px); }
+    .feature--left .feature__visual:hover .phone--front { transform: rotate(6deg)  translateY(-6px); }
   }
 
   .feature__copy { max-width: 36rem; }
@@ -1291,51 +1331,103 @@
       <div class="section__title">Working On</div>
     </div>
 
-    <div class="feature">
-      <div class="feature__copy">
-        <div class="feature__kicker reveal">A side project · 2026 —</div>
-        <h3 class="feature__title reveal reveal--delay-1">
-          Ping<em>Split</em>
-        </h3>
-        <p class="feature__deck reveal reveal--delay-2">
-          Split expenses. Just <em>WhatsApp.</em>
-        </p>
-        <div class="feature__body reveal reveal--delay-3">
-          <p>
-            A full-featured group expense tracker with <em>feature parity to
-            Splitwise</em> — create groups, log expenses, check balances, settle
-            up — built as a web app and mobile app. The product itself is
-            polished, but the <strong>real bet</strong> is the WhatsApp bot
-            integration sitting on top.
+    <div class="features">
+      <!-- PingSplit -->
+      <article class="feature feature--right">
+        <div class="feature__copy">
+          <div class="feature__kicker reveal">№ 01 · A side project · 2026</div>
+          <h3 class="feature__title reveal reveal--delay-1">
+            Ping<em>Split</em>
+          </h3>
+          <p class="feature__deck reveal reveal--delay-2">
+            Split expenses. Just <em>WhatsApp.</em>
           </p>
-          <p>
-            Tag the bot in any group chat and it logs the expense, splits it,
-            and updates everyone's balance — without anyone leaving the
-            conversation. The friction of "open the app, log it, share it" is
-            replaced by the chat that's already open.
-          </p>
+          <div class="feature__body reveal reveal--delay-3">
+            <p>
+              A full-featured group expense tracker with <em>feature parity to
+              Splitwise</em> — create groups, log expenses, check balances, settle
+              up — built as a web app and mobile app. The product itself is
+              polished, but the <strong>real bet</strong> is the WhatsApp bot
+              integration sitting on top.
+            </p>
+            <p>
+              Tag the bot in any group chat and it logs the expense, splits it,
+              and updates everyone's balance — without anyone leaving the
+              conversation. The friction of "open the app, log it, share it" is
+              replaced by the chat that's already open.
+            </p>
+          </div>
+          <div class="feature__tags reveal reveal--delay-4">
+            <span class="feature__tag">React</span>
+            <span class="feature__tag">React Native</span>
+            <span class="feature__tag">Node.js</span>
+            <span class="feature__tag">WhatsApp Business API</span>
+            <span class="feature__tag">Postgres</span>
+          </div>
+          <div class="feature__status reveal reveal--delay-4">
+            <span class="feature__status-dot"></span>
+            In development · launching soon
+          </div>
         </div>
-        <div class="feature__tags reveal reveal--delay-4">
-          <span class="feature__tag">React</span>
-          <span class="feature__tag">React Native</span>
-          <span class="feature__tag">Node.js</span>
-          <span class="feature__tag">WhatsApp Business API</span>
-          <span class="feature__tag">Postgres</span>
-        </div>
-        <div class="feature__status reveal reveal--delay-4">
-          <span class="feature__status-dot"></span>
-          In development · launching soon
-        </div>
-      </div>
 
-      <div class="feature__visual reveal reveal--delay-2">
-        <div class="phone phone--back">
-          <img src="/assets/pingsplit-add-expense.png" alt="PingSplit — Add expense screen showing a ₹1200 dinner split equally across six people in the Goa Trip group" loading="lazy">
+        <div class="feature__visual reveal reveal--delay-2">
+          <div class="phone phone--back">
+            <img src="/assets/pingsplit-add-expense.png" alt="PingSplit — Add expense screen showing a ₹1200 dinner split equally across six people in the Goa Trip group" loading="lazy">
+          </div>
+          <div class="phone phone--front">
+            <img src="/assets/pingsplit-dashboard.png" alt="PingSplit — Dashboard showing net balance, owed/owing breakdown, and groups synced from WhatsApp chats" loading="lazy">
+          </div>
         </div>
-        <div class="phone phone--front">
-          <img src="/assets/pingsplit-dashboard.png" alt="PingSplit — Dashboard showing net balance, owed/owing breakdown, and groups synced from WhatsApp chats" loading="lazy">
+      </article>
+
+      <!-- Flick -->
+      <article class="feature feature--left">
+        <div class="feature__copy">
+          <div class="feature__kicker reveal">№ 02 · A side project · 2026</div>
+          <h3 class="feature__title reveal reveal--delay-1">
+            <em>Flick.</em>
+          </h3>
+          <p class="feature__deck reveal reveal--delay-2">
+            Reclaim 10+ GB. In <em>five minutes.</em>
+          </p>
+          <div class="feature__body reveal reveal--delay-3">
+            <p>
+              A storage-cleaner built for the <em>Indian smartphone reality</em> —
+              where WhatsApp forwards, festival greetings, status saves, and
+              viral memes quietly fill up galleries. Apple Photos, Google Photos,
+              and Western cleaner apps don't address this category, because they
+              weren't built for it.
+            </p>
+            <p>
+              Flick scans the library, auto-categorizes by source (WhatsApp media,
+              Status saves, QR codes, memes, screenshots, documents), surfaces
+              what's <strong>safe to remove</strong>, and lets users review by
+              swipe — keep right, trash left — with a 30-day undo trash so
+              nothing is ever truly lost. Designed for confidence, not anxiety.
+            </p>
+          </div>
+          <div class="feature__tags reveal reveal--delay-4">
+            <span class="feature__tag">React Native</span>
+            <span class="feature__tag">On-Device ML</span>
+            <span class="feature__tag">Photo Library APIs</span>
+            <span class="feature__tag">iOS</span>
+            <span class="feature__tag">Android</span>
+          </div>
+          <div class="feature__status reveal reveal--delay-4">
+            <span class="feature__status-dot"></span>
+            In development · launching soon
+          </div>
         </div>
-      </div>
+
+        <div class="feature__visual reveal reveal--delay-2">
+          <div class="phone phone--back">
+            <img src="/assets/flick-review.png" alt="Flick — Swipe-review screen showing a WhatsApp Family group photo with size, source, and a swipe-to-trash interaction" loading="lazy">
+          </div>
+          <div class="phone phone--front">
+            <img src="/assets/flick-library.png" alt="Flick — Library overview showing 463.5 MB across 188 photos with categorized folders for WhatsApp media, Status saves, QR codes, and Documents" loading="lazy">
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
