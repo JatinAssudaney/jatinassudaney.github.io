@@ -1,6 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="10" fill="#f4efe6"/>
-  <text x="32" y="50" font-family="Georgia, serif" font-size="54"
-        font-style="italic" font-weight="400" fill="#a8341f"
-        text-anchor="middle">J</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Jatin Assudaney">
+  <style>
+    .bg { fill: #0a0b0d; }
+    .fg { fill: #00ff88; }
+    @media (prefers-color-scheme: light) {
+      .bg { fill: #fafaf7; }
+      .fg { fill: #00a85a; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32" rx="6"/>
+  <text class="fg" x="50%" y="24"
+        font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace"
+        font-weight="800" font-size="16"
+        text-anchor="middle"
+        letter-spacing="-1">JA</text>
 </svg>
