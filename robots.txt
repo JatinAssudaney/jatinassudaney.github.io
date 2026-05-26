@@ -1,4 +1,16 @@
+# https://jatinassudaney.github.io/ — Jatin Assudaney, Frontend Engineer Portfolio
 User-agent: *
+Allow: /
+Disallow:
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/
+
+User-agent: Bingbot
 Allow: /
 
 Sitemap: https://jatinassudaney.github.io/sitemap.xml
+Host: https://jatinassudaney.github.io
