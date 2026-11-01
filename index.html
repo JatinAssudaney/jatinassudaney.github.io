@@ -954,6 +954,42 @@
     .phone { width: 50%; }
   }
 
+  /* Browser-window frames, for desktop projects with landscape screenshots */
+  .side-feature__visual--browser { aspect-ratio: 4 / 3; }
+  .browser {
+    position: absolute;
+    width: 82%;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 1px 2px rgba(0,0,0,0.2),
+      0 12px 28px -8px rgba(0,0,0,0.5),
+      0 30px 60px -20px rgba(0,0,0,0.7);
+    transition: transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    background: var(--bg-elevated);
+  }
+  .browser__bar {
+    display: flex;
+    gap: 6px;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .browser__bar span {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border-strong);
+  }
+  .browser img { width: 100%; height: auto; display: block; aspect-ratio: 16 / 10; }
+  .browser--back  { top: 0; left: 0; transform: rotate(-3deg); z-index: 1; }
+  .browser--front { bottom: 0; right: 0; transform: rotate(2deg); z-index: 2; }
+  .side-feature__visual--browser:hover .browser--back  { transform: rotate(-4deg) translateY(-6px); }
+  .side-feature__visual--browser:hover .browser--front { transform: rotate(3deg) translateY(-6px); }
+  @media (max-width: 900px) {
+    .side-feature__visual--browser { aspect-ratio: 4 / 3; max-width: 480px; }
+    .browser { width: 86%; }
+  }
+
   /* ============================================================
      TOOLKIT
      ============================================================ */
@@ -1396,16 +1432,54 @@
   <div class="container">
     <div class="section-num reveal">04 / WORKING ON</div>
     <h2 class="section-title reveal">Side projects, <em>between contracts</em>.</h2>
-    <p class="section-sub reveal">Three personal builds — one live, two launching soon.</p>
+    <p class="section-sub reveal">Three personal builds: two live, one launching soon.</p>
 
     <div class="side-features">
 
       <article class="side-feature side-feature--right reveal">
         <div class="side-feature__copy">
           <div class="side-feature__brand">
-            <img src="assets/parkbook-logo.svg" alt="" width="56" height="56" loading="lazy">
+            <img src="assets/anykey-logo.svg" alt="" width="56" height="56" loading="lazy">
           </div>
           <div class="side-feature__kicker">№ 01 · A side project · 2026</div>
+          <h3 class="side-feature__title">Any<em>Key</em></h3>
+          <p class="side-feature__deck">Any website. <em>From the keyboard.</em></p>
+          <div class="side-feature__body">
+            <p>A Chrome extension for scrolling, clicking, switching tabs and pressing <em>any button</em> without the mouse, on every site. Press <strong>F</strong> and every link, button and field in view gets a short label; type the label to click it. Press <strong>?</strong> on any page to see every shortcut that works there.</p>
+            <p>The part I'm proudest of: pick any element on a site and give it your own keys. AnyKey remembers the element <strong>several ways</strong>, so the shortcut still finds it after the site ships a redesign. Presets for GitHub, Gmail, YouTube, Reddit, Stack Overflow, Hacker News and Wikipedia add keys those sites lack, and each one is checked by Playwright against the live site in CI. No data collected, no network requests.</p>
+          </div>
+          <div class="side-feature__tags">
+            <span class="side-feature__tag">TypeScript</span>
+            <span class="side-feature__tag">Manifest V3</span>
+            <span class="side-feature__tag">WXT</span>
+            <span class="side-feature__tag">React</span>
+            <span class="side-feature__tag">Tailwind</span>
+            <span class="side-feature__tag">Vitest</span>
+            <span class="side-feature__tag">Playwright</span>
+          </div>
+          <div class="side-feature__status">
+            <span class="side-feature__status-dot"></span>
+            Live · <a data-ph-event="side_project_link_clicked" data-ph-project="anykey" data-ph-target="chrome_web_store" href="https://chromewebstore.google.com/detail/anykey/emmemmnaljoepcaghoememjlmofagnol" target="_blank" rel="noopener" style="color: inherit; border-bottom: 1px solid currentColor;">Chrome Web Store</a> · <a data-ph-event="side_project_link_clicked" data-ph-project="anykey" data-ph-target="github" href="https://github.com/JatinAssudaney/AnyKey" target="_blank" rel="noopener" style="color: inherit; border-bottom: 1px solid currentColor;">GitHub</a>
+          </div>
+        </div>
+        <div class="side-feature__visual side-feature__visual--browser">
+          <div class="browser browser--back">
+            <div class="browser__bar"><span></span><span></span><span></span></div>
+            <img src="assets/anykey-hints.png" alt="AnyKey link hints: a short yellow label on every link and button of a recipe page" width="1280" height="800" loading="lazy">
+          </div>
+          <div class="browser browser--front">
+            <div class="browser__bar"><span></span><span></span><span></span></div>
+            <img src="assets/anykey-cheatsheet.png" alt="AnyKey cheatsheet listing every keyboard shortcut that works on a recipe page" width="1280" height="800" loading="lazy">
+          </div>
+        </div>
+      </article>
+
+      <article class="side-feature side-feature--left reveal">
+        <div class="side-feature__copy">
+          <div class="side-feature__brand">
+            <img src="assets/parkbook-logo.svg" alt="" width="56" height="56" loading="lazy">
+          </div>
+          <div class="side-feature__kicker">№ 02 · A side project · 2026</div>
           <h3 class="side-feature__title">park<em>book</em></h3>
           <p class="side-feature__deck">Authorized parking. <em>Sourced, not guessed.</em></p>
           <div class="side-feature__body">
@@ -1436,12 +1510,12 @@
         </div>
       </article>
 
-      <article class="side-feature side-feature--left reveal">
+      <article class="side-feature side-feature--right reveal">
         <div class="side-feature__copy">
           <div class="side-feature__brand">
             <img src="assets/pingsplit-logo.svg" alt="" width="56" height="56" loading="lazy">
           </div>
-          <div class="side-feature__kicker">№ 02 · A side project · 2026</div>
+          <div class="side-feature__kicker">№ 03 · A side project · 2026</div>
           <h3 class="side-feature__title">Ping<em>Split</em></h3>
           <p class="side-feature__deck">Split expenses. Just <em>WhatsApp.</em></p>
           <div class="side-feature__body">
@@ -1466,40 +1540,6 @@
           </div>
           <div class="phone phone--front">
             <img src="assets/pingsplit-dashboard.png" alt="PingSplit — Dashboard showing net balance, owed/owing breakdown, and groups synced from WhatsApp chats" loading="lazy">
-          </div>
-        </div>
-      </article>
-
-      <article class="side-feature side-feature--right reveal">
-        <div class="side-feature__copy">
-          <div class="side-feature__brand">
-            <img src="assets/flick-logo.svg" alt="" width="56" height="56" loading="lazy">
-          </div>
-          <div class="side-feature__kicker">№ 03 · A side project · 2026</div>
-          <h3 class="side-feature__title"><em>Flick.</em></h3>
-          <p class="side-feature__deck">Reclaim 10+ GB. In <em>five minutes.</em></p>
-          <div class="side-feature__body">
-            <p>A storage-cleaner built for the <em>Indian smartphone reality</em> — where WhatsApp forwards, festival greetings, status saves, and viral memes quietly fill up galleries. Apple Photos, Google Photos, and Western cleaner apps don't address this category, because they weren't built for it.</p>
-            <p>Flick scans the library, auto-categorizes by source (WhatsApp media, Status saves, QR codes, memes, screenshots, documents), surfaces what's <strong>safe to remove</strong>, and lets users review by swipe — keep right, trash left — with a 30-day undo trash so nothing is ever truly lost. Designed for confidence, not anxiety.</p>
-          </div>
-          <div class="side-feature__tags">
-            <span class="side-feature__tag">React Native</span>
-            <span class="side-feature__tag">On-Device ML</span>
-            <span class="side-feature__tag">Photo Library APIs</span>
-            <span class="side-feature__tag">iOS</span>
-            <span class="side-feature__tag">Android</span>
-          </div>
-          <div class="side-feature__status">
-            <span class="side-feature__status-dot"></span>
-            In development · launching soon
-          </div>
-        </div>
-        <div class="side-feature__visual">
-          <div class="phone phone--back">
-            <img src="assets/flick-review.png" alt="Flick — Swipe-review screen showing a WhatsApp Family group photo with size, source, and a swipe-to-trash interaction" loading="lazy">
-          </div>
-          <div class="phone phone--front">
-            <img src="assets/flick-library.png" alt="Flick — Library overview showing 463.5 MB across 188 photos with categorized folders for WhatsApp media, Status saves, QR codes, and Documents" loading="lazy">
           </div>
         </div>
       </article>
