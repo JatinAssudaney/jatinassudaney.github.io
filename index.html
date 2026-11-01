@@ -1092,6 +1092,9 @@
     .reveal { opacity: 1; transform: none; }
   }
 </style>
+
+<!-- PostHog analytics -->
+<script src="assets/js/analytics.js" defer></script>
 </head>
 <body>
 
@@ -1103,13 +1106,13 @@
     <span>jatin.assudaney</span>
   </a>
   <div class="nav-links">
-    <a href="#about"><span class="num">01</span>About</a>
-    <a href="#experience"><span class="num">02</span>Experience</a>
-    <a href="#work"><span class="num">03</span>Work</a>
-    <a href="#side"><span class="num">04</span>Side</a>
-    <a href="#toolkit"><span class="num">05</span>Toolkit</a>
-    <a href="#contact"><span class="num">06</span>Contact</a>
-    <a href="assets/Jatin-Assudaney-Resume.pdf" data-keep target="_blank" rel="noopener" class="btn btn-ghost" style="padding: 8px 14px; font-size: 12px;">Résumé ↗</a>
+    <a data-ph-event="nav_clicked" data-ph-section="about" href="#about"><span class="num">01</span>About</a>
+    <a data-ph-event="nav_clicked" data-ph-section="experience" href="#experience"><span class="num">02</span>Experience</a>
+    <a data-ph-event="nav_clicked" data-ph-section="work" href="#work"><span class="num">03</span>Work</a>
+    <a data-ph-event="nav_clicked" data-ph-section="side" href="#side"><span class="num">04</span>Side</a>
+    <a data-ph-event="nav_clicked" data-ph-section="toolkit" href="#toolkit"><span class="num">05</span>Toolkit</a>
+    <a data-ph-event="nav_clicked" data-ph-section="contact" href="#contact"><span class="num">06</span>Contact</a>
+    <a data-ph-event="resume_opened" data-ph-location="nav" href="assets/Jatin-Assudaney-Resume.pdf" data-keep target="_blank" rel="noopener" class="btn btn-ghost" style="padding: 8px 14px; font-size: 12px;">Résumé ↗</a>
     <button class="theme-toggle" data-keep aria-label="Toggle theme" id="themeToggle">
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -1160,14 +1163,14 @@
     </p>
 
     <div class="hero-ctas reveal in" style="transition-delay: 1.0s;">
-      <a href="#work" class="btn btn-primary">
+      <a data-ph-event="hero_cta_clicked" data-ph-cta="see_work" href="#work" class="btn btn-primary">
         View work
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
       </a>
-      <a href="#contact" class="btn btn-ghost">Get in touch</a>
-      <a href="assets/Jatin-Assudaney-Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost">
+      <a data-ph-event="hero_cta_clicked" data-ph-cta="get_in_touch" href="#contact" class="btn btn-ghost">Get in touch</a>
+      <a data-ph-event="resume_opened" data-ph-location="hero" href="assets/Jatin-Assudaney-Resume.pdf" target="_blank" rel="noopener" class="btn btn-ghost">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
         </svg>
@@ -1236,7 +1239,7 @@
           <dt>tz</dt>       <dd>UTC+5:30</dd>
           <dt>shipping</dt> <dd>since 2020</dd>
           <dt>focus</dt>    <dd>perf · media · DX</dd>
-          <dt>email</dt>    <dd><a href="mailto:jatin.assudaney24@gmail.com">jatin.assudaney24@gmail.com</a></dd>
+          <dt>email</dt>    <dd><a data-ph-event="email_clicked" data-ph-location="about" href="mailto:jatin.assudaney24@gmail.com">jatin.assudaney24@gmail.com</a></dd>
         </dl>
       </div>
     </div>
@@ -1338,7 +1341,7 @@
         <h3>Infinite <em>Gallery</em></h3>
         <p class="project-tagline">Client galleries that handle 2,000+ images without the browser breaking a sweat. Windowed virtualization with progressive LQIP and responsive srcset, bounded DOM regardless of scroll depth.</p>
         <div class="project-links">
-          <a href="https://jatina.gallery.aftershoot.com/beautiful-gallery" target="_blank" rel="noopener" class="project-link">View live ↗</a>
+          <a data-ph-event="project_link_clicked" data-ph-project="infinite_gallery" data-ph-target="live" href="https://jatina.gallery.aftershoot.com/beautiful-gallery" target="_blank" rel="noopener" class="project-link">View live ↗</a>
         </div>
         <div class="project-stack">
           <span>React</span><span>TypeScript</span><span>React Query</span>
@@ -1375,9 +1378,9 @@
         <h3>Dispatch<em>One</em></h3>
         <p class="project-tagline">The dispatch SaaS for Delhivery's logistics network. Web app for ops + a React Native driver companion app shipped to both stores. Real-time order tracking, route optimization, and a delivery workflow engine underneath.</p>
         <div class="project-links">
-          <a href="https://getos1.com/dispatchone" target="_blank" rel="noopener" class="project-link">Web ↗</a>
-          <a href="https://apps.apple.com/us/app/os1-driver-app/id6449781211" target="_blank" rel="noopener" class="project-link">iOS ↗</a>
-          <a href="https://play.google.com/store/apps/details?id=com.getos1.driver" target="_blank" rel="noopener" class="project-link">Android ↗</a>
+          <a data-ph-event="project_link_clicked" data-ph-project="os1_dispatchone" data-ph-target="web" href="https://getos1.com/dispatchone" target="_blank" rel="noopener" class="project-link">Web ↗</a>
+          <a data-ph-event="project_link_clicked" data-ph-project="os1_dispatchone" data-ph-target="ios" href="https://apps.apple.com/us/app/os1-driver-app/id6449781211" target="_blank" rel="noopener" class="project-link">iOS ↗</a>
+          <a data-ph-event="project_link_clicked" data-ph-project="os1_dispatchone" data-ph-target="android" href="https://play.google.com/store/apps/details?id=com.getos1.driver" target="_blank" rel="noopener" class="project-link">Android ↗</a>
         </div>
         <div class="project-stack">
           <span>React</span><span>React Native</span><span>GraphQL</span><span>WebSockets</span>
@@ -1420,7 +1423,7 @@
           </div>
           <div class="side-feature__status">
             <span class="side-feature__status-dot"></span>
-            Live · <a href="https://parkbook-tech.vercel.app/" target="_blank" rel="noopener" style="color: inherit; border-bottom: 1px solid currentColor;">parkbook-tech.vercel.app</a>
+            Live · <a data-ph-event="side_project_link_clicked" data-ph-project="parkbook" data-ph-target="live" href="https://parkbook-tech.vercel.app/" target="_blank" rel="noopener" style="color: inherit; border-bottom: 1px solid currentColor;">parkbook-tech.vercel.app</a>
           </div>
         </div>
         <div class="side-feature__visual">
@@ -1600,19 +1603,19 @@
       <h2 class="reveal">Currently <em>open</em><br>to senior frontend roles.</h2>
       <p class="contact-deck reveal">Best reached by email. Slow on social. If we've talked before, ping me — I'll remember.</p>
       <div class="contact-actions reveal">
-        <a href="mailto:jatin.assudaney24@gmail.com" class="contact-action">
+        <a data-ph-event="email_clicked" data-ph-location="contact" href="mailto:jatin.assudaney24@gmail.com" class="contact-action">
           <span>jatin.assudaney24@gmail.com</span>
           <span class="arrow">↗</span>
         </a>
-        <a href="assets/Jatin-Assudaney-Resume.pdf" target="_blank" rel="noopener" class="contact-action">
+        <a data-ph-event="resume_opened" data-ph-location="contact" href="assets/Jatin-Assudaney-Resume.pdf" target="_blank" rel="noopener" class="contact-action">
           <span>Résumé.pdf</span>
           <span class="arrow">↓</span>
         </a>
-        <a href="https://www.linkedin.com/in/jatin-assudaney" target="_blank" rel="noopener" class="contact-action">
+        <a data-ph-event="social_clicked" data-ph-platform="linkedin" href="https://www.linkedin.com/in/jatin-assudaney" target="_blank" rel="noopener" class="contact-action">
           <span>LinkedIn</span>
           <span class="arrow">↗</span>
         </a>
-        <a href="https://github.com/JatinAssudaney" target="_blank" rel="noopener" class="contact-action">
+        <a data-ph-event="social_clicked" data-ph-platform="github" href="https://github.com/JatinAssudaney" target="_blank" rel="noopener" class="contact-action">
           <span>GitHub</span>
           <span class="arrow">↗</span>
         </a>
